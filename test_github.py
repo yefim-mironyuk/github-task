@@ -17,12 +17,10 @@ def setup(browser):
     page.sign_in(username, password, browser)
 
 
-class TestCorrectUser():
-    @pytest.mark.dick2
-    def test_correct_user_is_logged_in(self, browser, setup):
-        page = MainPage(browser, link)
-        page.open()
-        page.is_user_correct(username)
+def test_correct_user_is_logged_in(browser, setup):
+    page = MainPage(browser, link)
+    page.open()
+    page.is_user_correct(username)
 
 
 class TestRepositories():
@@ -33,22 +31,32 @@ class TestRepositories():
         yield
         page.delete_repository()
 
-    @pytest.mark.dick2
     def test_create_repository(self, browser):
         page = MainPage(browser, link)
         page.is_repository_created()
 
-    @pytest.mark.dick2
     def test_rename_repository(self, browser):
         page = MainPage(browser, link)
         page.rename_repository()
         page.is_repository_renamed()
 
-    @pytest.mark.dick3
     def test_add_readme(self, browser):
         page = MainPage(browser, link)
         page.add_readme_file()
         page.is_readme_file_added()
+
+
+@pytest.fixture(scope="function")
+def setup_for_deleting_repository(browser, setup):
+    page = MainPage(browser, link)
+    page.create_repository()
+
+
+def test_delete_repository(browser, setup_for_deleting_repository):
+    page = MainPage(browser, link)
+    page.delete_repository()
+    page.is_repository_deleted()
+
 
 
 

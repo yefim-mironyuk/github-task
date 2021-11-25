@@ -82,3 +82,6 @@ class MainPage(BasePage):
 
     def is_readme_file_added(self):
         assert self.is_element_present(*MainPageLocators.README_WINDOW), "ReadMe file was not created!"
+
+    def is_repository_deleted(self):
+        assert self.is_element_present(*MainPageLocators.REPOSITORY_DELETED_MESSAGE), "Repository was not deleted!"

@@ -19,6 +19,7 @@ class MainPageLocators():
     README_TEXT_FIELD = (By.CSS_SELECTOR, "#code-editor > div > pre")
     SUBMIT_NEW_README_FILE = (By.CSS_SELECTOR, "#submit-file")
     README_WINDOW = (By.CSS_SELECTOR, "#readme")
+    REPOSITORY_DELETED_MESSAGE = (By.CSS_SELECTOR, "#js-flash-container > div")
 
 
 class LoginPageLocators():
