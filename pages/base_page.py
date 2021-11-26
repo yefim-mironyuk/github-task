@@ -17,13 +17,13 @@ class BasePage():
         self.browser.get(self.url)
 
     def is_element_present(self, how, what):
-        logger.debug(f'Trying to find element "{how}", "{what}"...')
+        logger.info(f'Trying to find element "{how}", "{what}"...')
         try:
             self.browser.find_element(how, what)
         except NoSuchElementException:
             logger.error(f'Cannot find element "{how}", "{what}"!')
             return False
-        logger.debug(f'Element "{how}", "{what}" was found...')
+        logger.info(f'Element "{how}", "{what}" was found...')
         return True
 
     def is_not_element_present(self, how, what, timeout=4):
@@ -43,6 +43,7 @@ class BasePage():
         return True
 
     def go_to_login_page(self):
+        logger.warning("Going to login page...")
         button = WebDriverWait(self.browser, 20).until(
             EC.element_to_be_clickable((BasePageLocators.SIGN_IN_HEADER)))
         button.click()
