@@ -1,10 +1,12 @@
 from pages.login_page import LoginPage
 from pages.main_page import MainPage
+from creds import Creds
 import pytest
-import allure
 
-username = "TA-user"
-password = "TAInternship11"
+
+# TYPE YOUR OWN CREDS IN "Creds.username" and "Creds.password".
+username = Creds.username
+password = Creds.password
 
 link = "https://github.com/"
 
@@ -14,7 +16,7 @@ def setup(browser):
     page = LoginPage(browser, link)
     page.open()
     page.go_to_login_page()
-    page.sign_in(username, password, browser)
+    page.sign_in(username, password)
 
 
 def test_correct_user_is_logged_in(browser, setup):

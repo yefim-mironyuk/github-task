@@ -1,16 +1,12 @@
-from selenium.webdriver.support.wait import WebDriverWait
-from .base_page import BasePage
+from .base_page import BasePage, FindElement
 from .locators import LoginPageLocators
-from selenium.webdriver.support import expected_conditions as EC
 
 
-class LoginPage(BasePage):
-    def sign_in(self, username, password, browser):
-        usernamestr = WebDriverWait(browser, 10).until(
-            EC.visibility_of_element_located((LoginPageLocators.USERNAME_FIELD)))
+class LoginPage(BasePage, FindElement):
+    def sign_in(self, username, password):
+        usernamestr = self.find_visible_element(*LoginPageLocators.USERNAME_FIELD)
         usernamestr.send_keys(username)
-        passwordstr = self.browser.find_element(*LoginPageLocators.PASSWORD_FIELD)
+        passwordstr = self.find_visible_element(*LoginPageLocators.PASSWORD_FIELD)
         passwordstr.send_keys(password)
-        button = WebDriverWait(self.browser, 20).until(
-            EC.element_to_be_clickable((LoginPageLocators.SIGN_IN_BUTTON)))
+        button = self.find_clickable_element(*LoginPageLocators.SIGN_IN_BUTTON)
         button.click()
