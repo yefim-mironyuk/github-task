@@ -3,6 +3,8 @@ import allure
 from selenium import webdriver
 import pytest
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
@@ -42,12 +44,12 @@ def browser(request):
         options = Options()
         options.add_experimental_option('prefs', {'intl.accept_languages': language})
         options.add_argument("--start-maximized")
-        browser = webdriver.Chrome(options=options)
+        browser = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     elif browser_name == "firefox":
         print("\nstart firefox browser for test..")
         fp = webdriver.FirefoxProfile()
         fp.set_preference("intl.accept_languages", language)
-        browser = webdriver.Firefox(firefox_profile=fp)
+        browser = webdriver.Firefox(executable_path=GeckoDriverManager().install(), firefox_profile=fp)
     else:
         raise pytest.UsageError("Choose browser!")
     yield browser
