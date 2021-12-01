@@ -11,19 +11,16 @@ class MainPage(FindElement, ElementStatements):
     new_name = random_name + '_RENAMED'
 
     def is_user_correct(self, username):
-        logger.info("Pressing menu button...")
         menu = self.find_clickable_element(*MainPageLocators.DROPDOWN_USERNAME_ICON_MENU)
         menu.click()
         username_in_menu = self.find_visible_element(*MainPageLocators.USERNAME_IN_MENU).text
         assert username_in_menu == username, "Incorrect user is logged in"
 
     def go_to_new_repository_page(self):
-        logger.info("Pressing new repository button...")
         new_repository_button = self.find_clickable_element(*MainPageLocators.NEW_REPOSITORY_BUTTON)
         new_repository_button.click()
 
     def go_to_settings_page(self):
-        logger.info("Pressing settings button...")
         settings_button = self.find_clickable_element(*MainPageLocators.SETTINGS_BUTTON)
         settings_button.click()
 
@@ -36,23 +33,18 @@ class MainPage(FindElement, ElementStatements):
         assert self.new_name == name, "Repository was not renamed!"
 
     def add_readme_file(self):
-        logger.info("Pressing readme adding button...")
         add_readme_button = self.find_clickable_element(*MainPageLocators.ADD_README_BUTTON)
         add_readme_button.click()
-        logger.info("Entering content in text field...")
         text_field = self.find_visible_element(*MainPageLocators.README_TEXT_FIELD)
         text_field.click()
         text_field.send_keys("\n THIS FILE WAS CREATED BY COMPUTER")
         time.sleep(3)
-        logger.info("Pressing submit button...")
         submit_button = self.find_clickable_element(*MainPageLocators.SUBMIT_NEW_README_FILE)
         submit_button.click()
 
     def is_readme_file_added(self):
-        logger.warning("Checking is readme file created...")
         assert self.is_element_present(*MainPageLocators.README_WINDOW), "ReadMe file was not created!"
 
     def is_repository_deleted(self):
-        logger.warning("Checking is repository deleted...")
         assert self.random_name not in self.find_visible_element(
             *MainPageLocators.REPOSITORIES).text, "Repository was not deleted!"
